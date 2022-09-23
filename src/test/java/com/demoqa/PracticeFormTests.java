@@ -59,15 +59,16 @@ public class PracticeFormTests {
         $("#submit").click();
 
         $(".modal-header").shouldHave(text("Thanks for submitting the form"));
-        $(".table").shouldHave(text(name + " " + lastName));
-        $(".table").shouldHave(text(userEmail));
-        $(".table").shouldHave(text(gender));
-        $(".table").shouldHave(text(userNumber));
-        $(".table").shouldHave(text("19 April,1900"));
-        $(".table").shouldHave(text(subject));
-        $(".table").shouldHave(text(hobby));
-        $(".table").shouldHave(text("nature.jpeg"));
-        $(".table").shouldHave(text(currentAddress));
-        $(".table").shouldHave(text(state + " " + city));
+        $(".table").shouldHave(text(name + " " + lastName),
+                text(userEmail),
+                text(gender),
+                text(userNumber),
+                text("19 April,1900"),
+                text(subject),
+                text(hobby),
+                text("nature.jpeg"),
+                text(currentAddress),
+                text(state + " " + city),
+                text(gender));
     }
 }
