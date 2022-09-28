@@ -1,16 +1,12 @@
 package com.demoqa;
 
 import com.codeborne.selenide.Configuration;
+import com.demoqa.pages.PracticeFormPage;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
-
-import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Selectors.byText;
-import static com.codeborne.selenide.Selenide.*;
-
 public class PracticeFormTests {
+    PracticeFormPage practiceFormPage = new PracticeFormPage();
 
     @BeforeAll
     static void setUp() {
@@ -31,44 +27,33 @@ public class PracticeFormTests {
         String currentAddress = "TestCurrentAddress";
         String state = "Uttar Pradesh";
         String city = "Agra";
+        String date = "19";
+        String month = "April";
+        String year = "1900";
 
-        open("/automation-practice-form");
-        $("#firstName").setValue(name);
-        $("#lastName").setValue(lastName);
-        $("#userEmail").setValue(userEmail);
-        $("#genterWrapper").$(byText(gender)).click();
-        $("#userNumber").setValue(userNumber);
+        practiceFormPage.openPage("/automation-practice-form")
+                .setFirstName(name)
+                .setLastName(lastName)
+                .setUserEmail(userEmail)
+                .setGenter(gender)
+                .setPhoneNumber(userNumber)
+                .setBirthDate(date, month, year)
+                .setSubject(subject)
+                .setHobbies(hobby)
+                .setPicture("src/test/resources/nature.jpeg")
+                .setAddress(currentAddress, state, city)
+                .clickSubmit();
 
-        $("#dateOfBirthInput").click();
-        $(".react-datepicker__year-select").selectOption("1900");
-        $(".react-datepicker__month-select").selectOption("April");
-        $(".react-datepicker__day--019").click();
-
-        $("#subjectsInput").setValue(subject).pressEnter();
-        $("#hobbiesWrapper").$(byText(hobby)).click();
-        $("#uploadPicture").uploadFile(new File("src/test/resources/nature.jpeg"));
-        $("#currentAddress").setValue(currentAddress);
-
-        executeJavaScript("$('footer').remove()");
-        executeJavaScript("$('#fixedban').remove()");
-        $("#state").click();
-        $("#state").$(byText(state)).click();
-        $("#city").click();
-        $("#city").$(byText(city)).click();
-
-        $("#submit").click();
-
-        $(".modal-header").shouldHave(text("Thanks for submitting the form"));
-        $(".table").shouldHave(text(name + " " + lastName),
-                text(userEmail),
-                text(gender),
-                text(userNumber),
-                text("19 April,1900"),
-                text(subject),
-                text(hobby),
-                text("nature.jpeg"),
-                text(currentAddress),
-                text(state + " " + city),
-                text(gender));
+        practiceFormPage.checkResultsTableVisible()
+                .checkResult("Student Name", name + " " + lastName)
+                .checkResult("Student Email", userEmail)
+                .checkResult("Gender", gender)
+                .checkResult("Mobile", userNumber)
+                .checkResult("Date of Birth", date + " " + month + "," + year)
+                .checkResult("Subjects", subject)
+                .checkResult("Hobbies", hobby)
+                .checkResult("Picture", "nature.jpeg")
+                .checkResult("Address", currentAddress)
+                .checkResult("State and City", state + " " + city);
     }
 }
