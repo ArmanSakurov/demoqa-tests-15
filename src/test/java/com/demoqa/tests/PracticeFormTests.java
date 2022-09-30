@@ -4,6 +4,7 @@ import com.codeborne.selenide.Configuration;
 import com.demoqa.pages.PracticeFormPage;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import com.demoqa.data.UserData;
 
 public class PracticeFormTests {
     PracticeFormPage practiceFormPage = new PracticeFormPage();
@@ -17,43 +18,30 @@ public class PracticeFormTests {
 
     @Test
     void fillFormTests() {
-        String name = "TestName";
-        String lastName = "TestLastName";
-        String userEmail = lastName + "@gmail.com";
-        String userNumber = "9222314562";
-        String hobby = "Sports";
-        String gender = "Male";
-        String subject = "Maths";
-        String currentAddress = "TestCurrentAddress";
-        String state = "Uttar Pradesh";
-        String city = "Agra";
-        String date = "19";
-        String month = "April";
-        String year = "1900";
 
         practiceFormPage.openPage("/automation-practice-form")
-                .setFirstName(name)
-                .setLastName(lastName)
-                .setUserEmail(userEmail)
-                .setGenter(gender)
-                .setPhoneNumber(userNumber)
-                .setBirthDate(date, month, year)
-                .setSubject(subject)
-                .setHobbies(hobby)
-                .setPicture("src/test/resources/nature.jpeg")
-                .setAddress(currentAddress, state, city)
+                .setFirstName(UserData.name)
+                .setLastName(UserData.lastName)
+                .setUserEmail(UserData.userEmail)
+                .setGenter(UserData.gender)
+                .setPhoneNumber(UserData.userNumber)
+                .setBirthDate(UserData.date, UserData.month, UserData.year)
+                .setSubject(UserData.subject)
+                .setHobbies(UserData.hobby)
+                .setPicture(UserData.picturePath)
+                .setAddress(UserData.currentAddress, UserData.state, UserData.city)
                 .clickSubmit();
 
         practiceFormPage.checkResultsTableVisible()
-                .checkResult("Student Name", name + " " + lastName)
-                .checkResult("Student Email", userEmail)
-                .checkResult("Gender", gender)
-                .checkResult("Mobile", userNumber)
-                .checkResult("Date of Birth", date + " " + month + "," + year)
-                .checkResult("Subjects", subject)
-                .checkResult("Hobbies", hobby)
+                .checkResult("Student Name", UserData.name + " " + UserData.lastName)
+                .checkResult("Student Email", UserData.userEmail)
+                .checkResult("Gender", UserData.gender)
+                .checkResult("Mobile", UserData.userNumber)
+                .checkResult("Date of Birth", UserData.date + " " + UserData.month + "," + UserData.year)
+                .checkResult("Subjects", UserData.subject)
+                .checkResult("Hobbies", UserData.hobby)
                 .checkResult("Picture", "nature.jpeg")
-                .checkResult("Address", currentAddress)
-                .checkResult("State and City", state + " " + city);
+                .checkResult("Address", UserData.currentAddress)
+                .checkResult("State and City", UserData.state + " " + UserData.city);
     }
 }
