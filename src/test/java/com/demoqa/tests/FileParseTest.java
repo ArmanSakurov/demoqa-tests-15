@@ -7,7 +7,6 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.opencsv.CSVReader;
 import org.junit.jupiter.api.Test;
-//import guru.qa.model.Teacher;
 
 import java.io.File;
 import java.io.InputStream;
