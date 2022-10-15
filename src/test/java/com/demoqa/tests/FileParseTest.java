@@ -33,6 +33,14 @@ public class FileParseTest {
     }
 
     @Test
+    void pdfFromResourcesTest() throws Exception {
+        InputStream is = cl.getResourceAsStream("notion.pdf");
+        PDF pdf = new PDF(is);
+        assertThat(pdf.text).contains("SQL");
+        assertThat(pdf.author).contains("Vladislav Burmistrov");
+    }
+
+    @Test
     void xlsTest() throws Exception {
         InputStream is = cl.getResourceAsStream("sample-xlsx-file.xlsx");
         XLS xls = new XLS(is);
