@@ -1,0 +1,10 @@
+{
+  "name": "Oleg",
+  "age": 15,
+  "isStudent": true,
+  "lessons": ["physics", "chemistry", "english"],
+  "education" : {
+    "type": "group",
+    "groupId": 321
+  }
+}
