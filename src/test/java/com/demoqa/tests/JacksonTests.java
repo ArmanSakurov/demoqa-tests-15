@@ -15,6 +15,8 @@ public class JacksonTests {
         assertThat(student.name).isEqualTo("Oleg");
         assertThat(student.age).isEqualTo(15);
         assertThat(student.isStudent).isEqualTo(true);
+        assertThat(student.lessons.get(0)).isEqualTo("physics");
+        assertThat(student.lessons.get(2)).isEqualTo("english");
         assertThat(student.education.type).isEqualTo("group");
         assertThat(student.education.groupId).isEqualTo(321);
     }
