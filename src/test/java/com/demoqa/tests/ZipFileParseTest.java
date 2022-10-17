@@ -6,6 +6,7 @@ import com.opencsv.CSVReader;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.List;
@@ -24,67 +25,74 @@ public class ZipFileParseTest {
 
     @Test
     void parseZipPdfTest() throws Exception {
-        ZipFile zipFile = new ZipFile(new File(pathToZip));
-        ZipInputStream is = new ZipInputStream(Objects.requireNonNull(cl.getResourceAsStream(zipName)));
-        ZipEntry entry;
-        while ((entry = is.getNextEntry()) != null) {
-            if (entry.getName().contains(".pdf")) {
-                try (InputStream inputStream = zipFile.getInputStream(entry)) {
-                    PDF pdf = new PDF(inputStream);
-                    System.out.println("File name: " + entry.getName());
-                    assertThat(entry.getName()).isEqualTo("pdf-file-for-zip.pdf");
-                    assertThat(pdf.author).contains("Vladislav Burmistrov");
-                    assertThat(pdf.title).contains("SQL");
-                    assertThat(pdf.text).contains("SQL");
+        try (ZipFile zipFile = new ZipFile(new File(pathToZip))) {
+            ZipInputStream is = new ZipInputStream(Objects.requireNonNull(cl.getResourceAsStream(zipName)));
+            ZipEntry entry;
+            while ((entry = is.getNextEntry()) != null) {
+                if (entry.getName().contains(".pdf")) {
+                    try (InputStream inputStream = zipFile.getInputStream(entry)) {
+                        PDF pdf = new PDF(inputStream);
+                        System.out.println("File name: " + entry.getName());
+                        assertThat(entry.getName()).isEqualTo("pdf-file-for-zip.pdf");
+                        assertThat(pdf.author).contains("Vladislav Burmistrov");
+                        assertThat(pdf.title).contains("SQL");
+                        assertThat(pdf.text).contains("SQL");
+                    }
                 }
             }
         }
     }
 
+
     @Test
     void parseZipXlsTest() throws Exception {
         ZipFile zipFile = new ZipFile(new File(pathToZip));
-        ZipInputStream is = new ZipInputStream(Objects.requireNonNull(cl.getResourceAsStream(zipName)));
-        ZipEntry entry;
-        while ((entry = is.getNextEntry()) != null) {
-            if (entry.getName().contains(".xls")) {
-                try (InputStream inputStream = zipFile.getInputStream(entry)) {
-                    XLS xls = new XLS(inputStream);
-                    System.out.println("File name: " + entry.getName());
-                    assertThat(entry.getName()).isEqualTo("excel-file-for-zip.xlsx");
-                    assertThat(xls.excel.getSheetAt(0)
-                            .getRow(3)
-                            .getCell(1)
-                            .getStringCellValue())
-                            .isEqualTo("Philip");
+        try {
+            ZipInputStream is = new ZipInputStream(Objects.requireNonNull(cl.getResourceAsStream(zipName)));
+            ZipEntry entry;
+            while ((entry = is.getNextEntry()) != null) {
+                if (entry.getName().contains(".xls")) {
+                    try (InputStream inputStream = zipFile.getInputStream(entry)) {
+                        XLS xls = new XLS(inputStream);
+                        System.out.println("File name: " + entry.getName());
+                        assertThat(entry.getName()).isEqualTo("excel-file-for-zip.xlsx");
+                        assertThat(xls.excel.getSheetAt(0)
+                                .getRow(3)
+                                .getCell(1)
+                                .getStringCellValue())
+                                .isEqualTo("Philip");
+                    }
                 }
             }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
     @Test
     void parseZipCsvTest() throws Exception {
-        ZipFile zipFile = new ZipFile(new File(pathToZip));
-        ZipInputStream is = new ZipInputStream(Objects.requireNonNull(cl.getResourceAsStream(zipName)));
-        ZipEntry entry;
-        while ((entry = is.getNextEntry()) != null) {
-            if (entry.getName().contains(".csv")) {
-                try (InputStream inputStream = zipFile.getInputStream(entry)) {
-                    CSVReader reader = new CSVReader(new InputStreamReader(inputStream));
-                    List<String[]> content = reader.readAll();
-                    System.out.println("File name: " + entry.getName());
+        try (ZipFile zipFile = new ZipFile(new File(pathToZip))) {
+            ZipInputStream is = new ZipInputStream(Objects.requireNonNull(cl.getResourceAsStream(zipName)));
+            ZipEntry entry;
+            while ((entry = is.getNextEntry()) != null) {
+                if (entry.getName().contains(".csv")) {
+                    try (InputStream inputStream = zipFile.getInputStream(entry)) {
+                        CSVReader reader = new CSVReader(new InputStreamReader(inputStream));
+                        List<String[]> content = reader.readAll();
+                        System.out.println("File name: " + entry.getName());
 
-                    String[] row = content.get(0);
-                    assertThat(row[0]).isEqualTo("user_id");
-                    assertThat(row[1]).isEqualTo("level");
-                    assertThat(row[2]).isEqualTo("education_form");
-                    assertThat(row[3]).isEqualTo("subject_id");
+                        String[] row = content.get(0);
+                        assertThat(row[0]).isEqualTo("user_id");
+                        assertThat(row[1]).isEqualTo("level");
+                        assertThat(row[2]).isEqualTo("education_form");
+                        assertThat(row[3]).isEqualTo("subject_id");
 
-                    row = content.get(1);
-                    assertThat(row[0]).isEqualTo("42568");
-                    assertThat(row[1]).isEqualTo("Pre-Intermediate");
-                    assertThat(row[2]).isEqualTo("group");
-                    assertThat(row[3]).isEqualTo("1");
+                        row = content.get(1);
+                        assertThat(row[0]).isEqualTo("42568");
+                        assertThat(row[1]).isEqualTo("Pre-Intermediate");
+                        assertThat(row[2]).isEqualTo("group");
+                        assertThat(row[3]).isEqualTo("1");
+                    }
                 }
             }
         }
