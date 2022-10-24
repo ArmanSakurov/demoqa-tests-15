@@ -19,10 +19,10 @@ public class SearchTests {
     @Test
     void textBoxTest() {
         open("https://demoqa.com/text-box");
-        $("[id=userName]").setValue("Sasha").pressEnter();
-        $("[id=userEmail]").setValue("sasha@mail.ru").pressEnter();
-        $("[id=currentAddress]").setValue("Omsk").pressEnter();
-        $("[id=permanentAddress]").setValue("street").pressEnter();
+        $("[id=userName]").setValue("Sasha");
+        $("[id=userEmail]").setValue("sasha@mail.ru");
+        $("[id=currentAddress]").setValue("Omsk");
+        $("[id=permanentAddress]").setValue("street");
         $("[id=submit]").click();
 
         $("[id=output]").shouldHave(text("Sasha"));
