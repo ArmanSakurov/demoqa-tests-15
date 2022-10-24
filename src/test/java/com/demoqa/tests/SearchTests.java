@@ -11,6 +11,6 @@ public class SearchTests {
     void successfulSearchTest() {
         open("https://www.google.com/");
         $("[name=q]").setValue("selenide").pressEnter();
-        $("[id=search]").shouldHave(text("Selenide"));
+        $("[id=search]").shouldHave(text("Selenide: лаконичные и стабильные"));
     }
 }
