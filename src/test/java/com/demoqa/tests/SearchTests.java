@@ -1,14 +1,22 @@
 package com.demoqa.tests;
 
+import com.codeborne.selenide.Configuration;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import javax.swing.*;
-
 import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.Selectors.byText;
+import static com.codeborne.selenide.Selenide.*;
 
 public class SearchTests {
+
+    @BeforeAll
+    static void setUp() {
+        Configuration.baseUrl = "https://demoqa.com";
+        Configuration.browserSize = "1920x1080";
+        Configuration.holdBrowserOpen = true;
+    }
+
     @Test
     void successfulSearchTest() {
         open("https://www.google.com/");
@@ -30,5 +38,4 @@ public class SearchTests {
         $("[id=output]").shouldHave(text("Omsk"));
         $("[id=output]").shouldHave(text("street"));
     }
-
 }
