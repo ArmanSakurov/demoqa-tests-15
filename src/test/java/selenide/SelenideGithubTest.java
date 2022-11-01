@@ -17,7 +17,7 @@ public class SelenideGithubTest {
     @BeforeAll
     static void setUp() {
         Configuration.browserSize = "1920x1080";
-        Configuration.holdBrowserOpen = false;
+        Configuration.holdBrowserOpen = true;
     }
 
     @Test
@@ -30,7 +30,6 @@ public class SelenideGithubTest {
         $(".header-search-input").sendKeys("eroshenkoam/allure-example");
         $(".header-search-input").submit();
 
-        $(linkText("рыфукерыерыкерке")).click();
         $(linkText("eroshenkoam/allure-example")).click();
         $("#issues-tab").click();
         $(withText("#80")).should(Condition.exist);
