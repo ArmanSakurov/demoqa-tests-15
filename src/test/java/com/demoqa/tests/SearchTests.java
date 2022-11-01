@@ -2,8 +2,6 @@ package com.demoqa.tests;
 
 import org.junit.jupiter.api.Test;
 
-import javax.swing.*;
-
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
@@ -31,4 +29,25 @@ public class SearchTests {
         $("[id=output]").shouldHave(text("street"));
     }
 
+    @Test
+    void DifferentInputFieldsTest() {
+        open("https://demoqa.com/automation-practice-form");
+        $("[id=firstName]").setValue("Sasha");
+        $("[id=lastName]").setValue("Alex");
+        $("[id=userEmail]").setValue("sasha@mail.ru");
+        $("[id=genterWrapper]").click();
+        $("[id=userNumber]").setValue("+79819999999");
+        $("[id=dateOfBirthInput]").click();
+        $(".react-datepicker__year-select").selectOption("2022");
+        $(".react-datepicker__month-select").selectOption("November");
+        $(".react-datepicker__day react-datepicker__day--003 react-datepicker__day--selected").click();
+
+
+
+
+
+
+    }
+
 }
+
