@@ -10,12 +10,6 @@ import static com.codeborne.selenide.Selenide.*;
 
 public class SearchTests {
 
-    @BeforeAll
-    static void setUp() {
-        Configuration.browserSize = "1920x1080";
-        Configuration.holdBrowserOpen = true;
-    }
-
     @Test
     void successfulSearchTest() {
         open("https://www.google.com/");
@@ -31,7 +25,6 @@ public class SearchTests {
         $("[id=currentAddress]").setValue("Omsk");
         $("[id=permanentAddress]").setValue("street");
         $("[id=submit]").click();
-
         $("[id=output]").shouldHave(text("Sasha"));
         $("[id=output]").shouldHave(text("sasha@mail.ru"));
         $("[id=output]").shouldHave(text("Omsk"));
@@ -74,16 +67,6 @@ public class SearchTests {
         $(".table-responsive table").$(byText("Hobbies")).parent().shouldHave(text("Sports"));
         $(".table-responsive table").$(byText("Address")).parent().shouldHave(text("Saint-P"));
         $(".table-responsive table").$(byText("State and City")).parent().shouldHave(text("NCR Delhi"));
-
-
-
-
-
-
-
-
-
-
     }
 
 }
