@@ -20,7 +20,7 @@ public class IssueSearchTests {
     RepositoryPage repositoryPage = new RepositoryPage();
 
     private static final String REPOSITORY = "ArmanSakurov/demoqa-tests-15";
-    private static final String githubUrl = "https://github.com";
+    private static final String GITHUB = "https://github.com";
     private static final String ISSUE = "Test issue for HW";
 
     @BeforeAll
@@ -34,7 +34,7 @@ public class IssueSearchTests {
     public void checkIssueName() {
         SelenideLogger.addListener("allure", new AllureSelenide());
 
-        githubMainPage.openPage(githubUrl)
+        githubMainPage.openPage(GITHUB)
                 .searchInputClick()
                 .fillSearchInput(REPOSITORY)
                 .searchSubmit();
@@ -48,7 +48,7 @@ public class IssueSearchTests {
         SelenideLogger.addListener("allure", new AllureSelenide());
 
         step("Открываем главную страницу", () -> {
-            githubMainPage.openPage(githubUrl);
+            githubMainPage.openPage(GITHUB);
         });
         step("Ищем репозиторий " + REPOSITORY, () -> {
             githubMainPage.searchInputClick().fillSearchInput(REPOSITORY).searchSubmit();

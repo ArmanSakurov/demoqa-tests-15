@@ -18,26 +18,26 @@ public class Snippets {
 
     void browser_command_examples() {
 
-        open("https://google.com");
+        open("https://google.com"); // открыть url
         open("/customer/orders");     // -Dselenide.baseUrl=http://123.23.23.1
         open("/", AuthenticationType.BASIC,
                 new BasicAuthCredentials("", "user", "password"));
 
-        Selenide.back();
-        Selenide.refresh();
+        Selenide.back(); // шаг назад (возврат к предыдущему состоянию)
+        Selenide.refresh(); // обновить страницу
 
-        Selenide.clearBrowserCookies();
-        Selenide.clearBrowserLocalStorage();
+        Selenide.clearBrowserCookies(); // очистить куки
+        Selenide.clearBrowserLocalStorage(); // очистить Local Storage
         executeJavaScript("sessionStorage.clear();"); // no Selenide command for this yet
 
-        Selenide.confirm(); // OK in alert dialogs
-        Selenide.dismiss(); // Cancel in alert dialogs
+        Selenide.confirm(); // OK in alert dialogs - кликнуть ОК в алерте
+        Selenide.dismiss(); // Cancel in alert dialogs - кликнуть ОТМЕНА в алерте
 
-        Selenide.closeWindow(); // close active tab
+        Selenide.closeWindow(); // close active tab - закрыть вкладку
         Selenide.closeWebDriver(); // close browser completely
 
-        Selenide.switchTo().frame("new");
-        Selenide.switchTo().defaultContent(); // return from frame back to the main DOM
+        Selenide.switchTo().frame("new"); // перейти во фрейм
+        Selenide.switchTo().defaultContent(); // return from frame back to the main DOM - выйти из фрейма
 
         Selenide.switchTo().window("The Internet");
 
@@ -52,14 +52,14 @@ public class Snippets {
 
         $("div", 2).click(); // the third div
 
-        $x("//h1/div").click();
-        $(byXpath("//h1/div")).click();
+        $x("//h1/div").click(); // xPath-выражение
+        $(byXpath("//h1/div")).click(); // xPath-выражение
 
-        $(byText("full text")).click();
-        $(withText("ull tex")).click();
+        $(byText("full text")).click(); // поиск локатора по тексту (текст полностью)
+        $(withText("ull tex")).click(); // поиск локатора по тексту (подстрока - часть текста)
 
-        $(byTagAndText("div", "full text"));
-        $(withTagAndText("div", "ull text"));
+        $(byTagAndText("div", "full text")); // поиск локатора по тегу и тексту (текст полностью)
+        $(withTagAndText("div", "ull text")); // поиск локатора по тексту (подстрока - часть текста)
 
         $("").parent();
         $("").sibling(1);
@@ -73,24 +73,24 @@ public class Snippets {
         $(byAttribute("abc", "x")).click();
         $("[abc=x]").click();
 
-        $(byId("mytext")).click();
+        $(byId("mytext")).click(); // поиск по id
         $("#mytext").click();
 
-        $(byClassName("red")).click();
+        $(byClassName("red")).click(); // поиск по классу
         $(".red").click();
     }
 
     void actions_examples() {
-        $("").click();
-        $("").doubleClick();
+        $("").click(); // клик
+        $("").doubleClick(); // двойной клик
         $("").contextClick();
 
-        $("").hover();
+        $("").hover(); // ховер - наведение мыши на элемент без клика
 
-        $("").setValue("text");
+        $("").setValue("text"); // ввести что-либо (например. текст)
         $("").append("text");
-        $("").clear();
-        $("").setValue(""); // clear
+        $("").clear(); // очистить поле
+        $("").setValue(""); // clear - очистить поле
 
         $("div").sendKeys("c"); // hotkey c on element
         actions().sendKeys("c").perform(); //hotkey c on whole application
@@ -112,16 +112,16 @@ public class Snippets {
     }
 
     void assertions_examples() {
-        $("").shouldBe(visible);
-        $("").shouldNotBe(visible);
-        $("").shouldHave(text("abc"));
-        $("").shouldNotHave(text("abc"));
+        $("").shouldBe(visible); // проверяем, что элемент видим
+        $("").shouldNotBe(visible); // проверяем, что элемент не видим
+        $("").shouldHave(text("abc")); // проверяем, что элемент содержит текст
+        $("").shouldNotHave(text("abc")); // проверяем, что элемент не содержит текст
         $("").should(appear);
         $("").shouldNot(appear);
 
 
         //longer timeouts
-        $("").shouldBe(visible, Duration.ofSeconds(30));
+        $("").shouldBe(visible, Duration.ofSeconds(30)); // проверяем, что элемент видим в течение 30секунд
 
 
     }
