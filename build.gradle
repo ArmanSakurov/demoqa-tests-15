@@ -1,9 +1,30 @@
 plugins {
     id 'java-library'
+    id 'io.qameta.allure' version '2.10.0'
+}
+
+allure {
+    report {
+        version.set("2.19.0")
+    }
+    adapter { // отвечает за появление папки build/allure-results
+        aspectjWeaver.set(true) //обработка аннотации @Step
+        frameworks {
+            junit5 { //название фреймворка
+                adapterVersion.set("2.19.0") //версия интеграции фреймворка и Allure
+            }
+        }
+    }
 }
 
 repositories {
     mavenCentral()
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
 }
 
 dependencies {
@@ -16,12 +37,18 @@ dependencies {
             'com.codeborne:xls-test:1.4.3',
             'com.opencsv:opencsv:5.7.0',
             'com.google.code.gson:gson:2.9.1',
-            'com.fasterxml.jackson.core:jackson-databind:2.13.4')
+            'com.fasterxml.jackson.core:jackson-databind:2.13.4',
+            "com.codeborne:selenide-testng:6.9.0",
+            'io.qameta.allure:allure-selenide:2.19.0'
+    )
     testRuntimeOnly(
             'org.slf4j:slf4j-simple:2.0.3')
 }
 
-tasks.withType(JavaCompile) {
+compileJava {
+    options.encoding = 'UTF-8'
+}
+compileTestJava {
     options.encoding = 'UTF-8'
 }
 
