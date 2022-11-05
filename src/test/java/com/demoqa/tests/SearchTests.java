@@ -9,6 +9,13 @@ import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
 
 public class SearchTests {
+
+    @BeforeAll
+    static void setUp() {
+        Configuration.browserSize = "1920x1080";
+        Configuration.holdBrowserOpen = true;
+    }
+
     @Test
     void successfulSearchTest() {
         open("https://www.google.com/");
