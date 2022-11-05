@@ -40,11 +40,6 @@ public class SearchTests {
         $("[id=output]").shouldHave(text("street"));
     }
 
-    @BeforeAll
-    static void setUp() {
-        Configuration.holdBrowserOpen = true;
-    }
-
     @Test
     void DifferentInputFieldsTest() {
         open("https://demoqa.com/automation-practice-form");
