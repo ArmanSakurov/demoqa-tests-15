@@ -54,4 +54,5 @@ compileTestJava {
 
 test {
     useJUnitPlatform()
+    systemProperties(System.getProperties())
 }
